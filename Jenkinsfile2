@@ -17,7 +17,7 @@ pipeline {
             steps {
                 sshagent(['jenkins-key']) {
                     sh "scp -o StrictHostKeyChecking=no **/*.war ubuntu@13.36.238.250:/opt/tomcat/webapps"
-                    sh 'ssh -t -t ubuntu@13.36.238.250 -o strictHostKeyChecking=no "rm /opt/tomcat/webapps/ROOT.war && mv /opt/tomcat/webapps/*.war /opt/tomcat/webapps/ROOT.war"'
+                    sh 'ssh -t -t ubuntu@13.36.238.250 -o strictHostKeyChecking=no "rm -rvf /opt/tomcat/webapps/ROOT && mv /opt/tomcat/webapps/*.war /opt/tomcat/webapps/ROOT.war"'
                 }
             }
         }
