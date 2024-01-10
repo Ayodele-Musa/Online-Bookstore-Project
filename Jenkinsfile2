@@ -4,7 +4,7 @@ pipeline {
     stages{
         stage('Build'){
             steps {
-                sh 'mvn clean package'
+                sh 'mvn install -DskipTests'
             }
             post {
                 success {
@@ -16,8 +16,8 @@ pipeline {
         stage ("Deploy to Tomcat"){
             steps {
                 sshagent(['jenkins-key']) {
-                    sh "scp -o StrictHostKeyChecking=no **/*.war ubuntu@54.226.160.13:/opt/tomcat/webapps"
-                    sh 'ssh -t -t ubuntu@54.226.160.13 -o strictHostKeyChecking=no "rm -rvf /opt/tomcat/webapps/ROOT.war && mv /opt/tomcat/webapps/*.war /opt/tomcat/webapps/ROOT.war"'
+                    sh "scp -o StrictHostKeyChecking=no **/*.war ubuntu@18.134.0.49:/opt/tomcat/webapps"
+                    // sh 'ssh -t -t ubuntu@54.226.160.13 -o strictHostKeyChecking=no "rm -rvf /opt/tomcat/webapps/ROOT.war && mv /opt/tomcat/webapps/*.war /opt/tomcat/webapps/ROOT.war"'
                 }
             }
         }
