@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        TOMCAT_PUBLIC_IP = '15.237.181.99'
+        TOMCAT_PUBLIC_IP = '51.44.167.172'
     }
     
     stages{
@@ -19,7 +19,7 @@ pipeline {
         }
         stage ("Deploy to Tomcat"){
             steps {
-                sshagent(['jenkins-key']) {
+                sshagent(['eu2acp-key']) {
                     sh "scp -o StrictHostKeyChecking=no **/*.war ubuntu@${TOMCAT_PUBLIC_IP}:/opt/tomcat/webapps"
                     sh 'ssh -t -t ubuntu@${TOMCAT_PUBLIC_IP} -o strictHostKeyChecking=no "rm -rvf /opt/tomcat/webapps/ROOT.war && mv /opt/tomcat/webapps/*.war /opt/tomcat/webapps/ROOT.war"'
                 }
